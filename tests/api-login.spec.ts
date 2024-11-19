@@ -13,9 +13,9 @@ test.describe('Tests for POST login/student', () => {
       const response = await request.post(`${serviceURL}${loginPath}`, {
         data: requestBody,
       })
-      const responseBody = await response.text()
-      console.log('Response body: ', response.status())
-      console.log('Response body: ', responseBody)
+      // const responseBody = await response.text()
+      // console.log('Response body: ', response.status())
+      // console.log('Response body: ', responseBody)
       expect(response.status()).toBe(StatusCodes.OK)
     })
 
@@ -24,8 +24,8 @@ test.describe('Tests for POST login/student', () => {
       const response = await request.post(`${serviceURL}${loginPath}`, {
         data: requestBody,
       })
-      const responseBody = await response.text()
-      console.log('Response body: ', responseBody)
+      // const responseBody = await response.text()
+      // console.log('Response body: ', responseBody)
       expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
     })
   })
@@ -42,8 +42,8 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       expect(response.status()).toBe(StatusCodes.OK)
-      const responseBody = await response.text()
-      console.log('Response body: ', responseBody)
+      // const responseBody = await response.text()
+      // console.log('Response body: ', responseBody)
       expect(jwtchecker.isValidJWT(responseBody)).toBe(true)
     })
 
@@ -53,7 +53,7 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
-      const responseBody = await response.text()
+      // const responseBody = await response.text()
       expect(jwtchecker.isValidJWT(responseBody)).toBe(false)
     })
 
@@ -63,7 +63,7 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
-      const responseBody = await response.text()
+      // const responseBody = await response.text()
       expect(jwtchecker.isValidJWT(responseBody)).toBe(false)
     })
   })
