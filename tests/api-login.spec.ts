@@ -31,9 +31,9 @@ test.describe('Tests for POST login/student', () => {
 
       const exp = decodedJWT.exp
 
-      const expDate = new Date(exp * 1000) 
+      const expDate = new Date(exp * 1000)
 
-      expect(expDate.getTime()).toBeGreaterThan(new Date().getTime()) 
+      expect(expDate.getTime()).toBeGreaterThan(new Date().getTime())
       expect.soft(decodedJWT.sub).toBeDefined()
       expect.soft(decodedJWT.exp).toBeDefined()
       expect.soft(decodedJWT.iat).toBeDefined()
