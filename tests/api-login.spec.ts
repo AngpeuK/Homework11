@@ -5,6 +5,11 @@ import { JWTchecker } from '../src/JWTchecker'
 
 const serviceURL = 'https://backend.tallinn-learning.ee/'
 const loginPath = 'login/student'
+let jwtchecker: JWTchecker
+
+test.beforeEach(() => {
+  jwtchecker = new JWTchecker()
+})
 
 test.describe('Tests for POST login/student', () => {
   test.describe('Tests from lesson 11', () => {
@@ -14,12 +19,8 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       const responseBody = await response.text()
-      // expect.soft(responseBody.message).toBeDefined()
-      // expect.soft(responseBody.apiKey).toBeDefined()
-      expect(responseBody.trim().length).toBeGreaterThan(0)
-      // console.log('Response body: ', response.status())
-      // console.log('Response body: ', responseBody)
       expect(response.status()).toBe(StatusCodes.OK)
+      expect(jwtchecker.isValidJWT(responseBody)).toBe(true)
     })
 
     test('login with incorrect data', async ({ request }) => {
@@ -28,17 +29,12 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       const responseBody = await response.text()
-      // console.log('Response body: ', responseBody)
       expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
+      expect(jwtchecker.isValidJWT(responseBody)).toBe(false)
     })
   })
 
   test.describe('Tests from Homework 11', () => {
-    let jwtchecker: JWTchecker
-    test.beforeEach(() => {
-      jwtchecker = new JWTchecker()
-    })
-
     test('login with valid data should return valid JWT in response', async ({ request }) => {
       const requestBody = LoginDto.createLoginWithCorrectData()
       const response = await request.post(`${serviceURL}${loginPath}`, {
@@ -46,7 +42,6 @@ test.describe('Tests for POST login/student', () => {
       })
       expect(response.status()).toBe(StatusCodes.OK)
       const responseBody = await response.text()
-      // console.log('Response body: ', responseBody)
       expect(jwtchecker.isValidJWT(responseBody)).toBe(true)
     })
 
