@@ -21,25 +21,19 @@ test.describe('Tests for POST login/student', () => {
       })
       const responseBody = await response.text()
 
-      // Using Function TextToJson
       const jwt = responseBody
 
-      // Verify, that token is defined in responseBody
       expect.soft(jwt).toBeDefined()
 
-      // Decoding JWT and get all data
       const decodedJWT = decodeJWT(jwt)
 
-      // Verify, that JSON key apiKey exists and matches the token
       expect.soft(decodedJWT.apiKey).toBe(jwt)
 
-      //  extraction the key "exp" from JSON body
       const exp = decodedJWT.exp
 
-      // Convert exp to date
-      const expDate = new Date(exp * 1000) // *1000 to get milliseconds
+      const expDate = new Date(exp * 1000) 
 
-      expect(expDate.getTime()).toBeGreaterThan(new Date().getTime()) // verify that the expiration date is in the future
+      expect(expDate.getTime()).toBeGreaterThan(new Date().getTime()) 
       expect.soft(decodedJWT.sub).toBeDefined()
       expect.soft(decodedJWT.exp).toBeDefined()
       expect.soft(decodedJWT.iat).toBeDefined()
