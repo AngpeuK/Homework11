@@ -14,8 +14,10 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       const responseBody = await response.text()
-      console.log('Response body: ', response.status())
-      console.log('Response body: ', responseBody)
+      expect.soft(responseBody.message).toBeDefined()
+      expect.soft(responseBody.apiKey).toBeDefined()
+      // console.log('Response body: ', response.status())
+      // console.log('Response body: ', responseBody)
       expect(response.status()).toBe(StatusCodes.OK)
     })
 
@@ -25,7 +27,9 @@ test.describe('Tests for POST login/student', () => {
         data: requestBody,
       })
       const responseBody = await response.text()
-      console.log('Response body: ', responseBody)
+      expect.soft(responseBody.message).toBeDefined()
+      expect.soft(responseBody.apiKey).toBeDefined()
+      // console.log('Response body: ', responseBody)
       expect(response.status()).toBe(StatusCodes.UNAUTHORIZED)
     })
   })
